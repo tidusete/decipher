@@ -9,6 +9,10 @@ from whisper.utils import get_writer
 from ffpb import main as ffpb
 
 
+options = {}
+options["raw_max_line_width"] = 1080
+options["max_line_count"] = 100
+
 def transcribe(video_in, output_dir, model, language, task, subs):
     video_in = Path(video_in).absolute()
     output_dir = set_workdir(output_dir)
@@ -26,7 +30,7 @@ def transcribe(video_in, output_dir, model, language, task, subs):
     result = model.transcribe(audio_file, task=task, language=language, verbose=True, fp16=gpu)
     writer = get_writer("srt", ".")
 
-    writer(result, video_in.stem)
+    writer(result, video_in.stem, options)
     srt_file = video_in.stem + ".srt"
 
     assert os.path.exists(srt_file), f"SRT file not generated?"
@@ -59,7 +63,7 @@ def subtitle(video_in, output_dir, subs, task):
             if data[i].startswith("Style"):
                 data[
                     i
-                ] = "Style: Default,Open Sans,16,&H00FFFFFF,&H000000FF,&H80000000,&H80000000,-1,0,0,0,100,100,0,0,4,0,0,2,10,10,10,1\n"
+                ] = "Style: Default,Open Sans,16,&H00FFFFFF,&H000000FF,&H80000000,&H80000000,-1,0,0,0,100,100,0,0,4,0,0,2,10,10,50,1\n"
                 break
         with open(ass_file, "w", encoding="utf-8") as file:
             file.writelines(data)

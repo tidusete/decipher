@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='decipher',
-    url='https://github.com/dsymbol/decipher',
+    url='https://https://github.com/tidusete/decipher',
     author='dsymbol',
     install_requires=[
-        'openai-whisper==20230314',
+        'openai-whisper @ git+https://github.com/openai/whisper.git',
         'click==8.1.3',
         'ffpb==0.4.1',
         'tqdm'
