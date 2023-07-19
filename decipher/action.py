@@ -12,6 +12,7 @@ from ffpb import main as ffpb
 options = {}
 options["raw_max_line_width"] = 1080
 options["max_line_count"] = 100
+options["highlight_words"] = "False"
 
 def transcribe(video_in, output_dir, model, language, task, subs):
     video_in = Path(video_in).absolute()
